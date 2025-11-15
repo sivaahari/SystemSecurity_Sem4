@@ -2,11 +2,17 @@ rows=int(input("Number of rows: "))
 cols=int(input("Number of columns: "))
 serv1=[]
 for i in range(rows):
+    row=[]               
     for j in range(cols):
-        x=int(input())
-        serv1[i][j]=x
+        x=int()
+        row.append(x)
+    serv1.append(row)
 
-serv2=serv1,serv3=serv1,serv4=serv1
+print(serv1)
+
+serv2=serv1
+serv3=serv1
+serv4=serv1
 
 s1=list(bin(int(input("Enter query for server 1 (row): ")))[2:])
 t1=list(bin(int(input("Enter query for server 1 (column): ")))[2:])
@@ -31,7 +37,10 @@ for i in range(len(s1)):
     else:
         t2.append(t1[i])
 
-sum1=0,sum2=0,sum3=0,sum4=0
+sum1=0
+sum2=0
+sum3=0
+sum4=0
 
 for i in range(len(s1)):
     for j in range(len(t1)):
