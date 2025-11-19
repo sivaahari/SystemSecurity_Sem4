@@ -2,67 +2,63 @@ rows=int(input("Number of rows: "))
 cols=int(input("Number of columns: "))
 serv1=[]
 for i in range(rows):
-    row=[]
-    for j in range(cols):
-        x=int(input())
-        row.append(x)
+    row=[int(input()) for j in range(cols)]
     serv1.append(row)
 
-print(serv1)
+print("The matrix is:")
+for row in serv1:
+    print(row)
 
-serv2=serv1
-serv3=serv1
-serv4=serv1
+serv2=[r[:] for r in serv1]
+serv3=[r[:] for r in serv1]
+serv4=[r[:] for r in serv1]
 
-s1=list(bin(int(input("Enter query for server 1 (row): ")))[2:])
-t1=list(bin(int(input("Enter query for server 1 (column): ")))[2:])
+s1=list(input("Enter query for server 1 (row): ").strip())
+t1=list(input("Enter query for server 1 (column): ").strip())
 cs=int(input("Enter CHANGE index of row: "))
 ct=int(input("Enter CHANGE index of column: "))
-s2=[]
-t2=[]
 
+if len(s1)<rows:
+    s1=['0']*(rows-len(s1))+s1
+else:
+    s1=s1[-rows:]
+if len(t1)<cols:
+    t1=['0']*(cols-len(t1))+t1
+else:
+    t1=t1[-cols:]
+
+s2=[]
 for i in range(len(s1)):
     if i==cs:
-        s2.append('1' if s1[i]=='0' else '0')
+        if s1[i]=='0':
+            s2.append('1')
+        else:
+            s2.append('0')
     else:
         s2.append(s1[i])
-    if i==ct:
-        t2.append('1' if t1[i]=='0' else '0')
+
+t2=[]
+for j in range(len(t1)):
+    if j==ct:
+        if t1[j]=='0':
+            t2.append('1')
+        else:
+            t2.append('0')
     else:
-        t2.append(t1[i])
+        t2.append(t1[j])
 
-sum1=0
-sum2=0
-sum3=0
-sum4=0
 
-for i in range(len(s1)):
-    for j in range(len(t1)):
-        if s1[i]==t1[j] and s1[i]=='1':
-            sum1^=serv1[i][j]
-        if s2[i]==t1[j] and s2[i]=='1':
-            sum2^=serv2[i][j]
-        if s1[i]==t2[j] and s1[i]=='1':
-            sum3^=serv3[i][j]
-        if s2[i]==t2[j] and s2[i]=='1':
-            sum4^=serv4[i][j]
+sum1=sum2=sum3=sum4=0
+for i in range(rows):
+    for j in range(cols):
+        if s1[i]=='1' and t1[j]=='1':
+            sum1 ^= serv1[i][j]
+        if s2[i]=='1' and t1[j]=='1':
+            sum2 ^= serv2[i][j]
+        if s1[i]=='1' and t2[j]=='1':
+            sum3 ^= serv3[i][j]
+        if s2[i]=='1' and t2[j]=='1':
+            sum4 ^= serv4[i][j]
 
-res=sum1^sum2^sum3^sum4
-print("Result: ",res)
-
-with open("log_four_database_problem.txt","a") as f:
-    f.write("New Entry:\n")
-    f.write("Matrix:\n")
-    for row in serv1:
-        f.write(str(row)+"\n")
-    f.write("Row Query: "+ "".join(s1) + "\n")
-    f.write("Column Query: "+ "".join(t1) + "\n")
-    f.write("Changed Row Index: "+ str(cs) + "\n")
-    f.write("Changed Column Index: "+ str(ct) + "\n")
-    f.write("Modified Row: "+ "".join(s2) + "\n")
-    f.write("Modified Column: "+ "".join(t2) + "\n")
-    f.write("Sum1: "+ str(sum1) + "\n")
-    f.write("Sum2: "+ str(sum2) + "\n")
-    f.write("Sum3: "+ str(sum3) + "\n")
-    f.write("Sum4: "+ str(sum4) + "\n")
-    f.write("Result: "+ str(res) + "\n")
+res = sum1 ^ sum2 ^ sum3 ^ sum4
+print("Result:", res)
