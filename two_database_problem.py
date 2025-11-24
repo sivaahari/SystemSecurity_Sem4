@@ -2,7 +2,7 @@ serv1=[11,12,13,14,15]
 serv2=[11,12,13,14,15]
 
 query = int(input("Enter query for server 1: "))
-str1 = list(bin(query)[2:])
+str1 = list(bin(query)[2:len(serv1)+2])
 change = int(input("Enter CHANGE index: "))
 
 str2=[]
@@ -14,7 +14,7 @@ for i in range(len(str1)):
 
 sum1 = 0
 sum2 = 0
-for i in range(len(str1)):
+for i in range(len(str2)):
     sum1 ^= int(str1[i]) * serv1[i]
     sum2 ^= int(str2[i]) * serv2[i]
 
